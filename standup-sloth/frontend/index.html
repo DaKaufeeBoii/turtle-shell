@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StandupSloth 🦥 - Offline Git-to-Standup Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-badge">🦥</div>
+        <div>
+          <div class="brand-title-wrap">
+            <h1 class="brand-title">StandupSloth</h1>
+            <span class="badge-theme">Hacktoberfest 2026: Slow and Steady</span>
+          </div>
+          <p class="brand-subtitle">The lazy developer's background agent. Turns chaotic git commits into executive standups while you sleep.</p>
+        </div>
+      </div>
+
+      <!-- Live Badges -->
+      <div class="status-pills">
+        <div class="pill pill-green" id="pillGemma">
+          <span class="dot pulse"></span>
+          <span>Gemma 2 9B (Local)</span>
+        </div>
+        <div class="pill pill-blue" id="pillMongo">
+          <span class="dot"></span>
+          <span>MongoDB Atlas</span>
+        </div>
+        <div class="pill pill-purple" id="pillSentry">
+          <span class="dot"></span>
+          <span>Sentry Tracing</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <main class="main-layout">
+      <!-- Control Panel -->
+      <section class="card control-card">
+        <div class="card-header">
+          <h2 class="card-title">🎛️ Sloth Control Center</h2>
+          <span class="card-caption">Tell the sloth where to look</span>
+        </div>
+
+        <div class="control-grid">
+          <!-- Repo Input -->
+          <div class="form-group">
+            <label for="repoPathInput" class="form-label">Repository Path</label>
+            <div class="input-with-action">
+              <input type="text" id="repoPathInput" class="text-input" placeholder="D:\Kaufee\projects\Hacktoberfest-2026\challenge-4" value="D:\Kaufee\projects\Hacktoberfest-2026">
+              <button id="btnCurrentRepo" class="btn-ghost" title="Use current project folder">This Repo</button>
+            </div>
+          </div>
+
+          <!-- Timeframe selector -->
+          <div class="form-group">
+            <label class="form-label">Timeframe to Inspect</label>
+            <div class="timeframe-buttons" id="timeframeContainer">
+              <button class="btn-time active" data-since="24 hours ago">Past 24h</button>
+              <button class="btn-time" data-since="yesterday">Yesterday</button>
+              <button class="btn-time" data-since="3 days ago">Past 3 Days</button>
+              <button class="btn-time" data-since="7 days ago">Past Week</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="action-footer">
+          <button id="btnWakeSloth" class="btn-primary">
+            <span class="btn-icon">🦥</span>
+            <span class="btn-text">Wake the Sloth & Generate</span>
+          </button>
+          <div class="lazy-metric">
+            <span>Estimated effort: <strong>0 calories</strong></span>
+          </div>
+        </div>
+
+        <!-- Execution Progress Bar -->
+        <div id="progressContainer" class="progress-container hidden">
+          <div class="step-indicator">
+            <div class="step-dot active" id="dot1"></div>
+            <div class="step-line" id="line1"></div>
+            <div class="step-dot" id="dot2"></div>
+            <div class="step-line" id="line2"></div>
+            <div class="step-dot" id="dot3"></div>
+          </div>
+          <div class="progress-message" id="progressMessage">
+            Scanning git commits and diff stats...
+          </div>
+        </div>
+      </section>
+
+      <!-- Output Workspace -->
+      <section class="card results-card" id="resultsSection">
+        <!-- Result Tabs -->
+        <div class="tab-bar">
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="tabStandup">📋 Daily Standup</button>
+            <button class="tab-btn" data-tab="tabChangelog">🚀 Release Changelog</button>
+            <button class="tab-btn" data-tab="tabChaos">⚡ Chaos vs Order</button>
+            <button class="tab-btn" data-tab="tabMemory">🧠 Sloth Memory Search</button>
+          </div>
+
+          <!-- Quick Copy Action -->
+          <div class="tab-actions">
+            <button id="btnCopySlack" class="btn-copy">
+              <span class="copy-icon">📋</span>
+              <span class="copy-label">Copy to Slack</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 1: Daily Standup -->
+        <div class="tab-content active" id="tabStandup">
+          <div class="summary-box" id="standupSummaryBox">
+            <span class="summary-label">Executive Takeaway</span>
+            <p id="executiveSummary" class="summary-text">Ready when you are. Click 'Wake the Sloth' to inspect your recent commits.</p>
+          </div>
+
+          <div class="standup-sections">
+            <div class="standup-col">
+              <div class="section-title">
+                <span class="badge-sub">Yesterday</span>
+                <h3>What Got Done</h3>
+              </div>
+              <ul class="task-list" id="listYesterday">
+                <li class="placeholder-item">Hit 'Wake the Sloth' to populate your completed tasks...</li>
+              </ul>
+            </div>
+
+            <div class="standup-col">
+              <div class="section-title">
+                <span class="badge-sub">Today</span>
+                <h3>Next In Queue</h3>
+              </div>
+              <ul class="task-list" id="listToday">
+                <li class="placeholder-item">Calculated automatically from your unfinished branches...</li>
+              </ul>
+            </div>
+
+            <div class="standup-col">
+              <div class="section-title">
+                <span class="badge-sub">Blockers</span>
+                <h3>Roadblocks</h3>
+              </div>
+              <ul class="task-list" id="listBlockers">
+                <li class="placeholder-item">None</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Changelog -->
+        <div class="tab-content hidden" id="tabChangelog">
+          <div class="markdown-preview" id="changelogPreview">
+            <pre><code id="changelogCode">## Changelog - StandupSloth
+
+Generate a standup first to see automatic Conventional Changelog formatting here.</code></pre>
+          </div>
+        </div>
+
+        <!-- Tab 3: Chaos vs Order -->
+        <div class="tab-content hidden" id="tabChaos">
+          <div class="chaos-grid">
+            <div class="chaos-col">
+              <div class="col-header header-chaos">
+                <span>💥 The Reality: Chaotic Commits</span>
+                <span class="badge-count" id="rawCommitCount">0 commits</span>
+              </div>
+              <div class="raw-commit-box" id="rawCommitsContainer">
+                <div class="commit-row"><span class="commit-hash">8a291f0</span> <span class="commit-msg">wip</span></div>
+                <div class="commit-row"><span class="commit-hash">3b190c4</span> <span class="commit-msg">fix typo</span></div>
+                <div class="commit-row"><span class="commit-hash">189d023</span> <span class="commit-msg">it works now finally</span></div>
+                <div class="commit-row"><span class="commit-hash">7fa281a</span> <span class="commit-msg">tests pass please merge</span></div>
+              </div>
+            </div>
+
+            <div class="chaos-col">
+              <div class="col-header header-order">
+                <span>✨ What Your Boss & Team Sees</span>
+                <span class="badge-order">Gemma 2 9B Synthesized</span>
+              </div>
+              <div class="polished-box" id="polishedOrderBox">
+                <p>Run the generator to compare chaotic raw commit messages with structured, human-readable feature summaries.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Sloth Memory (MongoDB Atlas) -->
+        <div class="tab-content hidden" id="tabMemory">
+          <div class="search-box-wrap">
+            <input type="text" id="memorySearchInput" class="search-input" placeholder="Ask your past standups: e.g. 'What did I do on auth last week?'">
+            <button id="btnSearchMemory" class="btn-search">Search Memory</button>
+          </div>
+
+          <div class="memory-results" id="memoryResultsContainer">
+            <p class="empty-state">No search performed yet. Search past standups saved in your MongoDB Atlas cluster.</p>
+          </div>
+        </div>
+
+        <!-- Footer Metrics & Sentry Trace -->
+        <div class="results-footer">
+          <div class="meta-item">
+            <span>Analyzed:</span>
+            <strong id="metaFiles">0 files (+0 / -0)</strong>
+          </div>
+          <div class="meta-item">
+            <span>Latency:</span>
+            <strong id="metaLatency">0.0s</strong>
+          </div>
+          <div class="meta-item">
+            <span>Sentry Trace:</span>
+            <span class="trace-badge" id="metaTrace">Inactive</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">Copied to Slack! 🦥</div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
