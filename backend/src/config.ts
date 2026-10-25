@@ -1,6 +1,16 @@
 import dotenv from "dotenv";
 import * as Sentry from "@sentry/node";
 import path from "node:path";
+import { Agent, setGlobalDispatcher } from "undici";
+
+// Allow local Ollama inference on CPU without hitting Undici headers timeout
+setGlobalDispatcher(
+  new Agent({
+    headersTimeout: 0,
+    bodyTimeout: 0,
+    connectTimeout: 60000,
+  })
+);
 
 dotenv.config();
 

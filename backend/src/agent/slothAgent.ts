@@ -117,7 +117,7 @@ export async function runStandupSloth(
         .map((c) => `- [${c.hash}] ${c.message} (${c.date})`)
         .join("\n");
 
-      const systemPrompt = `You are StandupSloth, an expert software engineer assistant who rewards laziness.
+      const systemPrompt = `You are ShellTurtle, an expert software engineer assistant who honors the slow and steady tortoise philosophy.
 Your job is to read raw, messy, chaotic git commits and code diffs, and turn them into crystal-clear, professional engineering updates.
 Notice the following rules:
 1. Ignore trivial WIP or typo messages: cluster related commits into cohesive features.
@@ -133,10 +133,10 @@ ${commitListStr || "No committed changes, only working tree modifications."}
 
 STATISTICS:
 ${gitData.stats.filesChanged} files changed, +${gitData.stats.insertions} / -${gitData.stats.deletions} lines.
-Files touched: ${gitData.stats.files.slice(0, 10).join(", ")}
+Files touched: ${gitData.stats.files.slice(0, 8).join(", ")}
 
 DIFF EXCERPTS:
-${gitData.filteredDiff.slice(0, 4000)}
+${gitData.filteredDiff.slice(0, 1500)}
 
 UNCOMMITTED CHANGES:
 ${gitData.uncommittedChanges || "None"}
@@ -175,7 +175,8 @@ Please return JSON with this EXACT structure:
             ],
             format: "json",
             options: {
-              temperature: 0.2,
+              temperature: 0.1,
+              num_predict: 450,
             },
           });
 
@@ -184,38 +185,55 @@ Please return JSON with this EXACT structure:
         }
       );
 
+      // Helper to safely coerce arrays or string lists
+      const toArray = (val: any): string[] => {
+        if (!val) return [];
+        if (Array.isArray(val)) return val.map((v) => String(v).trim());
+        if (typeof val === "string") return [val.trim()];
+        return [];
+      };
+
+      const yesterdayTasks = toArray(parsed.standup?.yesterday);
+      const todayTasks = toArray(parsed.standup?.today);
+      const blockerList = toArray(parsed.standup?.blockers);
+      const finalBlockers = blockerList.length > 0 ? blockerList : ["None"];
+
+      const features = toArray(parsed.changelog?.features);
+      const fixes = toArray(parsed.changelog?.fixes);
+      const chores = toArray(parsed.changelog?.chores);
+
       // 3. Assemble formatted Markdown
       const standupMd = `*Yesterday:*
-${(parsed.standup?.yesterday || []).map((y: string) => `- ${y}`).join("\n")}
+${yesterdayTasks.map((y: string) => `- ${y}`).join("\n") || "- Completed general repository maintenance."}
 
 *Today:*
-${(parsed.standup?.today || []).map((t: string) => `- ${t}`).join("\n")}
+${todayTasks.map((t: string) => `- ${t}`).join("\n") || "- Continue development on branch " + gitData.currentBranch}
 
 *Blockers:*
-${(parsed.standup?.blockers || ["None"]).map((b: string) => `- ${b}`).join("\n")}`;
+${finalBlockers.map((b: string) => `- ${b}`).join("\n")}`;
 
       const changelogMd = `## Changelog - ${gitData.repoName}
 
 ### 🚀 Features
-${(parsed.changelog?.features || []).map((f: string) => `- ${f}`).join("\n") || "- None"}
+${features.map((f: string) => `- ${f}`).join("\n") || "- None"}
 
 ### 🐛 Bug Fixes
-${(parsed.changelog?.fixes || []).map((f: string) => `- ${f}`).join("\n") || "- None"}
+${fixes.map((f: string) => `- ${f}`).join("\n") || "- None"}
 
 ### 🧹 Chores & Maintenance
-${(parsed.changelog?.chores || []).map((c: string) => `- ${c}`).join("\n") || "- None"}`;
+${chores.map((c: string) => `- ${c}`).join("\n") || "- None"}`;
 
       const standupResult = {
-        yesterday: parsed.standup?.yesterday || [],
-        today: parsed.standup?.today || [],
-        blockers: parsed.standup?.blockers || ["None"],
+        yesterday: yesterdayTasks,
+        today: todayTasks,
+        blockers: finalBlockers,
         rawMarkdown: standupMd,
       };
 
       const changelogResult = {
-        features: parsed.changelog?.features || [],
-        fixes: parsed.changelog?.fixes || [],
-        chores: parsed.changelog?.chores || [],
+        features,
+        fixes,
+        chores,
         rawMarkdown: changelogMd,
       };
 

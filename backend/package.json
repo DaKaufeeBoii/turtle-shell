@@ -1,7 +1,7 @@
 {
-  "name": "standup-sloth-backend",
+  "name": "turtle-shell",
   "version": "1.0.0",
-  "description": "Background git-to-standup agent powered by Gemma 2 9B, Mastra, MongoDB Atlas, and Sentry",
+  "description": "Slow & steady offline git-to-standup agent powered by Gemma 2 9B, Mastra, MongoDB Atlas, and Sentry",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -16,7 +16,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongodb": "^6.9.0",
-    "ollama": "^0.5.12"
+    "ollama": "^0.5.12",
+    "undici": "^8.12.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

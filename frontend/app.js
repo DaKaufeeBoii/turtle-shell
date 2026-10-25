@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // UI Loading state
     btnWakeSloth.disabled = true;
-    btnWakeSloth.innerHTML = `<span class="btn-icon">💤</span><span class="btn-text">Sloth is Thinking...</span>`;
+    btnWakeSloth.innerHTML = `<span class="btn-icon">🐢</span><span class="btn-text">Turtle is Thinking...</span>`;
     progressContainer.classList.remove("hidden");
     progressMessage.innerText = "Extracting git logs and filtering noise...";
 
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const timer = setTimeout(() => {
       dot2.classList.add("active");
-      progressMessage.innerText = "Prompting local Gemma 2 9B to summarize chaotic diffs...";
+      progressMessage.innerText = "Prompting local Gemma 2 9B to synthesize chaotic diffs...";
     }, 1500);
 
     try {
@@ -137,16 +137,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       dot3.classList.add("active");
-      progressMessage.innerText = "Complete! Updates prepared with zero effort.";
+      progressMessage.innerText = "Complete! Slow & steady updates prepared.";
 
       renderStandup(data);
     } catch (err) {
       clearTimeout(timer);
-      alert("Error contacting StandupSloth backend. Make sure npm run dev is running!");
+      alert("Error contacting ShellTurtle backend. Make sure npm run dev is running!");
       console.error(err);
     } finally {
       btnWakeSloth.disabled = false;
-      btnWakeSloth.innerHTML = `<span class="btn-icon">🦥</span><span class="btn-text">Wake the Sloth & Generate</span>`;
+      btnWakeSloth.innerHTML = `<span class="btn-icon">🐢</span><span class="btn-text">Wake the Turtle & Generate</span>`;
       setTimeout(() => {
         progressContainer.classList.add("hidden");
       }, 3000);

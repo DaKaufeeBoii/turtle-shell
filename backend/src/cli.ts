@@ -7,8 +7,8 @@ async function main() {
   const repoPath = args[0] || path.resolve("../..");
   const since = args[1] || "24 hours ago";
 
-  console.log(`\n🦥 ============================================`);
-  console.log(`   STANDUPSLOTH: Slow and Steady Git Janitor`);
+  console.log(`\n🐢 ============================================`);
+  console.log(`   SHELLTURTLE: Slow & Steady Git Janitor`);
   console.log(`============================================\n`);
   console.log(`📁 Inspecting: ${repoPath}`);
   console.log(`⏱️  Timeframe:  ${since}`);

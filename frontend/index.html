@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StandupSloth 🦥 - Offline Git-to-Standup Agent</title>
+  <title>ShellTurtle 🐢 - Slow & Steady Git-to-Standup Agent</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,13 +18,13 @@
     <!-- Header -->
     <header class="header">
       <div class="brand">
-        <div class="logo-badge">🦥</div>
+        <div class="logo-badge">🐢</div>
         <div>
           <div class="brand-title-wrap">
-            <h1 class="brand-title">StandupSloth</h1>
-            <span class="badge-theme">Hacktoberfest 2026: Slow and Steady</span>
+            <h1 class="brand-title">ShellTurtle</h1>
+            <span class="badge-theme">Hacktoberfest 2026: Slow & Steady</span>
           </div>
-          <p class="brand-subtitle">The lazy developer's background agent. Turns chaotic git commits into executive standups while you sleep.</p>
+          <p class="brand-subtitle">The terminal tortoise that wins the race. Turns chaotic git commits into executive standups while you sleep.</p>
         </div>
       </div>
 
@@ -50,8 +50,8 @@
       <!-- Control Panel -->
       <section class="card control-card">
         <div class="card-header">
-          <h2 class="card-title">🎛️ Sloth Control Center</h2>
-          <span class="card-caption">Tell the sloth where to look</span>
+          <h2 class="card-title">🎛️ Turtle Control Center</h2>
+          <span class="card-caption">Tell the turtle where to look</span>
         </div>
 
         <div class="control-grid">
@@ -59,7 +59,7 @@
           <div class="form-group">
             <label for="repoPathInput" class="form-label">Repository Path</label>
             <div class="input-with-action">
-              <input type="text" id="repoPathInput" class="text-input" placeholder="D:\Kaufee\projects\Hacktoberfest-2026\challenge-4" value="D:\Kaufee\projects\Hacktoberfest-2026">
+              <input type="text" id="repoPathInput" class="text-input" placeholder="D:\Kaufee\projects\Hacktoberfest-2026\challenge-4" value="D:\Kaufee\projects\Hacktoberfest-2026\challenge-4">
               <button id="btnCurrentRepo" class="btn-ghost" title="Use current project folder">This Repo</button>
             </div>
           </div>
@@ -79,11 +79,11 @@
         <!-- Action Button -->
         <div class="action-footer">
           <button id="btnWakeSloth" class="btn-primary">
-            <span class="btn-icon">🦥</span>
-            <span class="btn-text">Wake the Sloth & Generate</span>
+            <span class="btn-icon">🐢</span>
+            <span class="btn-text">Wake the Turtle & Generate</span>
           </button>
           <div class="lazy-metric">
-            <span>Estimated effort: <strong>0 calories</strong></span>
+            <span>Slow and steady: <strong>100% on-device</strong></span>
           </div>
         </div>
 
@@ -110,7 +110,7 @@
             <button class="tab-btn active" data-tab="tabStandup">📋 Daily Standup</button>
             <button class="tab-btn" data-tab="tabChangelog">🚀 Release Changelog</button>
             <button class="tab-btn" data-tab="tabChaos">⚡ Chaos vs Order</button>
-            <button class="tab-btn" data-tab="tabMemory">🧠 Sloth Memory Search</button>
+            <button class="tab-btn" data-tab="tabMemory">🧠 Turtle Memory Search</button>
           </div>
 
           <!-- Quick Copy Action -->
@@ -126,7 +126,7 @@
         <div class="tab-content active" id="tabStandup">
           <div class="summary-box" id="standupSummaryBox">
             <span class="summary-label">Executive Takeaway</span>
-            <p id="executiveSummary" class="summary-text">Ready when you are. Click 'Wake the Sloth' to inspect your recent commits.</p>
+            <p id="executiveSummary" class="summary-text">Ready when you are. Click 'Wake the Turtle' to inspect your recent commits.</p>
           </div>
 
           <div class="standup-sections">
@@ -136,7 +136,7 @@
                 <h3>What Got Done</h3>
               </div>
               <ul class="task-list" id="listYesterday">
-                <li class="placeholder-item">Hit 'Wake the Sloth' to populate your completed tasks...</li>
+                <li class="placeholder-item">Hit 'Wake the Turtle' to populate your completed tasks...</li>
               </ul>
             </div>
 
@@ -165,7 +165,7 @@
         <!-- Tab 2: Changelog -->
         <div class="tab-content hidden" id="tabChangelog">
           <div class="markdown-preview" id="changelogPreview">
-            <pre><code id="changelogCode">## Changelog - StandupSloth
+            <pre><code id="changelogCode">## Changelog - ShellTurtle
 
 Generate a standup first to see automatic Conventional Changelog formatting here.</code></pre>
           </div>
@@ -230,7 +230,7 @@ Generate a standup first to see automatic Conventional Changelog formatting here
     </main>
 
     <!-- Toast Notification -->
-    <div id="toast" class="toast hidden">Copied to Slack! 🦥</div>
+    <div id="toast" class="toast hidden">Copied to Slack! 🐢</div>
   </div>
 
   <script src="app.js"></script>
