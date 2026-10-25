@@ -119,5 +119,11 @@ Set it up once, pay $0 forever, and let the tortoise do the paperwork while you 
 
 ---
 
+## 🤖 Agent Session (DevRelay)
+The complete interactive AI agent session transcript is published on DEV via DevRelay:  
+👉 [**View Interactive DevRelay Agent Session**](https://dev.to/agent_sessions/building-turtleshell-the-slow-and-steady-git-janitor-liefdr)
+
+---
+
 ## 📜 License
 MIT License. Built for the **Hacktoberfest 2026 Open-Source AI Challenge: Week 3 (Slow and Steady)**.
